@@ -31,7 +31,7 @@ public class MusicRecordGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //Get Movie title, make sure it's not blank
+                //Get record title, make sure it's not blank
                 String title = recordTitle.getText();
 
                 if (title == null || title.trim().equals("")) {
@@ -84,7 +84,7 @@ public class MusicRecordGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.shutdown();
-                System.exit(0);   //Should probably be a call back to Main class so all the System.exit(0) calls are in one place.
+                System.exit(0);
             }
         });
     }

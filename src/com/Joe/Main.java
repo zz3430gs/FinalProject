@@ -86,7 +86,7 @@ public class Main {
                 statement.executeUpdate(createTableSQL);
 
                 System.out.println("Created music_records table");
-                //TODO Create some example or data into table
+                //TODO Create some example or put some data into table
             }
             return true;
 
