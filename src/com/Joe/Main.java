@@ -19,7 +19,7 @@ public class Main {
     public final static String RECORD_ARTIST = "record_artist";
     public final static String SELLING_PRICE = "selling_price";
 
-    private static MusicDataModel musicDataModel;
+    private static MusicData musicDataModel;
 
     public static void main(String[] args) {
 
@@ -50,7 +50,7 @@ public class Main {
 
             if (musicDataModel == null) {
                 //If there's no current MusicDataModel then create one
-                musicDataModel = new MusicDataModel(rs);
+                musicDataModel = new MusicData(rs);
             }
                 return true;
         } catch (Exception e) {
@@ -86,16 +86,7 @@ public class Main {
                 statement.executeUpdate(createTableSQL);
 
                 System.out.println("Created music_records table");
-                // Add some test data - change to some movies you like, if desired
-                //Example SQL: INSERT INTO movie_reviews ( title, year_released, rating ) VALUES ( 'Back to the future', 1985, 5)
-                //Here we have to specify which columns the data will go into, because we want to omit the ID column and have MySQL fill it in for us.
-                //But, since we are only adding 3 pieces of data for 4 columns, we have to specify which columns each data item is for.
-                /*String addDataSQL = "INSERT INTO " + MOVIE_TABLE_NAME + "(" + TITLE_COLUMN + ", " + YEAR_COLUMN + ", " + RATING_COLUMN + ")" + " VALUES ('Back to the future', 1985, 5)";
-                statement.executeUpdate(addDataSQL);
-                addDataSQL = "INSERT INTO " + MOVIE_TABLE_NAME +  "(" + TITLE_COLUMN + ", " + YEAR_COLUMN + ", " + RATING_COLUMN + ")" + " VALUES('Back to the Future II', 1989, 4)";
-                statement.executeUpdate(addDataSQL);
-                addDataSQL = "INSERT INTO " + MOVIE_TABLE_NAME +  "(" + TITLE_COLUMN + ", " + YEAR_COLUMN + ", " + RATING_COLUMN + ")" + " VALUES ('Back to the Future III', 1990, 3)";
-                statement.executeUpdate(addDataSQL);*/
+                //TODO Create some example or data into table
             }
             return true;
 

@@ -16,7 +16,7 @@ public class MusicRecordGUI extends JFrame {
     private JTextField consignerName;
     private JTable musicRecordTable;
 
-    MusicRecordGUI(final MusicDataModel musicDatamodel) {
+    MusicRecordGUI(final MusicData musicDatamodel) {
 
         musicRecordTable.setModel(musicDatamodel);
 

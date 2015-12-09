@@ -4,13 +4,13 @@ import javax.swing.table.AbstractTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MusicDataModel extends AbstractTableModel {
+public class MusicData extends AbstractTableModel {
 
     private int rowCount = 0;
     private int colCount = 0;
     ResultSet resultSet;
 
-    public MusicDataModel(ResultSet rs) {
+    public MusicData(ResultSet rs) {
         this.resultSet = rs;
         setup();
     }
