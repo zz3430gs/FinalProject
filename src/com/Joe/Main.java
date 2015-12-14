@@ -21,7 +21,7 @@ public class Main {
 
     private static MusicData musicDataModel;
     private static MusicData consigner_info_Display=null;
-    private static MusicData musicDatamodel=null;
+    private static MusicData musicRecord=null;
     private static MusicData sales_record=null;
 
     public static void main(String[] args) {
@@ -33,9 +33,9 @@ public class Main {
         if (!loadAllMusics()) {
             System.exit(-1);
         }
-
+        CreateTables ct = new CreateTables();
         //If no errors, then start GUI
-        MainGui tableGUI = new MainGui(musicDatamodel,consigner_info_Display,sales_record);
+        MainGui tableGUI = new MainGui(musicRecord,consigner_info_Display,sales_record);
 
 
     }
@@ -67,7 +67,7 @@ public class Main {
         }
     }
 
-    public static boolean setup(){
+    public static boolean setup() {
         try {
 
             //Load driver class
@@ -89,11 +89,11 @@ public class Main {
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
                 String createTableSQL = "CREATE TABLE " + MUSICRECORD_TABLE_NAME + " (" + PK_COLUMN + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + TITLE_COLUMN + " varchar(50), " + RECORD_ARTIST + " varchar(50), " + SELLING_PRICE + " int, PRIMARY KEY(" + PK_COLUMN + "))";
                 System.out.println(createTableSQL);
+                insert_into_record_table();
                 statement.executeUpdate(createTableSQL);
-
                 System.out.println("Created music_records table");
 
-                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
+                /*String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
                 System.out.println(addDataSQl);
                 statement.executeUpdate(addDataSQl);
                 //addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
@@ -115,18 +115,33 @@ public class Main {
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
                 statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
-                statement.executeUpdate(addDataSQl);
+                statement.executeUpdate(addDataSQl);*/
 
             }
-
             return true;
 
+            //return true;
+
+            // } catch (SQLException se) {
+            //  System.out.println(se);
+            //se.printStackTrace();
+            //return false;
         } catch (SQLException se) {
             System.out.println(se);
             se.printStackTrace();
             return false;
         }
-
+    }
+    public static boolean insert_into_record_table(){
+        try{
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('James','Back in Black','AC/DC',20)");
+            return true;
+        }
+        catch (SQLException se){
+            System.out.println(se);
+            System.out.println("Error adding data to table");
+        }
+        return false;
     }
 
     private static boolean musicTableExists() throws SQLException {

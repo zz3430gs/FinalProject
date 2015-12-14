@@ -133,7 +133,7 @@ public class MusicData extends AbstractTableModel {
         setup();
     }
 
-    public boolean insertRecordRow(String consignerName, String title, String artist, int sellingPrice) {
+    /*public boolean insertRecordRow(String consignerName, String title, String artist, int sellingPrice) {
 
         try {
             //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
@@ -151,7 +151,7 @@ public class MusicData extends AbstractTableModel {
             System.out.println(e);
             return false;
         }
-    }
+    }*/
     public boolean insert_Record_To_Table(String artistName,String recordTitle,double price, String consignerName){
         PreparedStatement ps = null;
         try{
@@ -176,7 +176,7 @@ public class MusicData extends AbstractTableModel {
         }
     }
 
-    public boolean insertCosignerRow(String consignerName, String consignerEmail, String address) {
+    /*public boolean insertCosignerRow(String consignerName, String consignerEmail, String address) {
 
         try {
             //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
@@ -194,11 +194,11 @@ public class MusicData extends AbstractTableModel {
             return false;
         }
 
-    }
-    public boolean insert_Consigner_To_List(String consigner_Name,String address,String E_Mail,String banking_Number){
+    }*/
+    public boolean insert_Consigner_To_List(String consigner_Name,String address,String E_Mail){
         PreparedStatement ps = null;
         try{
-            String prep_Insert_String="INSERT INTO consigner_info (Consigner_Name,Address,E_Mail,Bank_Account_Number)VALUES(?,?,?)";
+            String prep_Insert_String="INSERT INTO consigner_info (Consigner_Name,Address,E_Mail,)VALUES(?,?,?)";
             resultSet.moveToInsertRow() ;
             ps=Main.conn.prepareStatement(prep_Insert_String);
             ps.setString(1,consigner_Name);
@@ -207,12 +207,38 @@ public class MusicData extends AbstractTableModel {
             ps.executeUpdate();
             this.fireTableDataChanged();
             ps.close();
-            JOptionPane.showMessageDialog(null,"You successfully added "+consigner_Name+", Address: "+address+", E-mail: "+E_Mail+", Routing Number: "+banking_Number+".");
+            JOptionPane.showMessageDialog(null,"You successfully added "+consigner_Name+", Address: "+address+", E-mail: "+E_Mail+"");
             System.out.println(String.format("You added"));
             return true;
         }catch(SQLException se){
             System.out.println("Insertion of Consigner Information Failed");
             System.out.println(se);
+            return false;
+        }
+    }
+    public boolean insert_into_Sales(String consignerName, double price, String recordArtist, String recordTitle ){
+        PreparedStatement pS = null;
+        double saleX60 = price * .6;
+        double saleX40 = price * .4;
+        try {
+            String prep_insert_string = "INSERT INTO sales_table(consignerName, price, my60percemt, c_40percent, recordArtist, recordTitle) VALUES (?,?,?,?,?,?)";
+            resultSet.moveToInsertRow();
+            pS=Main.conn.prepareStatement(prep_insert_string);
+            pS.setString(1, consignerName);
+            pS.setDouble(2,price);
+            pS.setDouble(3, saleX60);
+            pS.setDouble(4, saleX40);
+            pS.setString(5, recordArtist);
+            pS.setString(6, recordTitle);
+            pS.executeUpdate();
+            this.fireTableDataChanged();
+            pS.close();
+            JOptionPane.showMessageDialog(null,"Added "+ consignerName + ", price: "+ price + " my60%: "+ saleX60 + " consigner40%:" + saleX40+ " record artist: "+ recordArtist + " record titel: "+ recordTitle);
+            return true;
+
+        }
+        catch (SQLException se){
+            System.out.println("Insertion of sales information failed");
             return false;
         }
     }

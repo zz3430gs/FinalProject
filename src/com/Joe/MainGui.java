@@ -10,7 +10,7 @@ public class MainGui extends JFrame implements WindowListener {
     private JPanel rootPanel;
     private JTabbedPane jTabbedPane;
 
-    public MainGui(final MusicData musicDatamodel, final MusicData cosigner_info_display, final MusicData sales_records) {
+    public MainGui(final MusicData musicRecord, final MusicData cosigner_info_display, final MusicData sales_records) {
         setContentPane(rootPanel);
 
         jTabbedPane=new JTabbedPane();
@@ -22,7 +22,7 @@ public class MainGui extends JFrame implements WindowListener {
             System.out.println("Tab Changed To: " + sourceTabbedPane.getTitleAt(index));
             System.out.println("Tab Index Number: " + index);
             if (index == 0) {
-                musicDatamodel.fireTableDataChanged();
+                musicRecord.fireTableDataChanged();
                 //musicDatamodel.search("Default","",index);
                 System.out.println("This is the records tab");
             } else if (index == 1) {
@@ -38,7 +38,7 @@ public class MainGui extends JFrame implements WindowListener {
     };
         jTabbedPane.addChangeListener(changeListener);
         rootPanel.add(jTabbedPane);
-        jTabbedPane.add("Music Record", new MusicRecordGUI(musicDatamodel));
+        jTabbedPane.add("Music Record", new MusicRecordGUI(musicRecord));
         jTabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
         jTabbedPane.add("Sales Record",new SalesRecords(sales_records));
         pack();

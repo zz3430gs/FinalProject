@@ -31,7 +31,7 @@ public class Consigner_Info extends JPanel {
                     System.out.println("PLease enter in data and don't leave empty space");
                 }
                 System.out.println("Adding "+ cosignerName + " "+cosignerAddress+ " "+cosignerEmail);
-                boolean cosignerInsertRow = consigner_info_Display.insertCosignerRow(cosignerName, cosignerEmail , cosignerAddress);
+                boolean cosignerInsertRow = consigner_info_Display.insert_Consigner_To_List(cosignerName, cosignerAddress , cosignerEmail);
 
                 if (!cosignerInsertRow) {
                     JOptionPane.showMessageDialog(rootPanel, "Error adding new cosigner info");

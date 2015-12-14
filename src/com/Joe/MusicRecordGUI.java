@@ -24,7 +24,7 @@ public class MusicRecordGUI extends JFrame{
     private JButton sellRecordButton;
 
 
-    MusicRecordGUI(final MusicData musicDatamodel){//, final MusicData cosigner_info_display, final MusicData sales_records) {
+    MusicRecordGUI(final MusicData musicRecord){//, final MusicData cosigner_info_display, final MusicData sales_records) {
 
         //tabbedPane = new JTabbedPane();
 
@@ -57,7 +57,7 @@ public class MusicRecordGUI extends JFrame{
         tabbedPane.add("Sales Record",new SalesRecords(sales_records));*/
 
         musicRecordTable.setGridColor(Color.BLACK);
-        musicRecordTable.setModel(musicDatamodel);
+        musicRecordTable.setModel(musicRecord);
 
        // setContentPane(rootPanel);
         //pack();
@@ -98,13 +98,13 @@ public class MusicRecordGUI extends JFrame{
                             "The price number can't be negative");
                     return;
                 }
-                System.out.println("Adding " + title + " " + consignername + " " + name + " " + sellPrice);
-                boolean insertRecordRow = musicDatamodel.insertRecordRow(consignername, title, name, sellPrice);
+                System.out.println("Adding " + name + " " + title + " " + " " + sellPrice + " " + consignername);
+                boolean insertRecordRow = musicRecord.insert_Record_To_Table(name, title, sellPrice, consignername);
 
                 if (!insertRecordRow) {
                     JOptionPane.showMessageDialog(rootPane, "Error adding new Music Record");
                 }
-                musicDatamodel.fireTableDataChanged();
+                musicRecord.fireTableDataChanged();
             }
         });
 
@@ -116,7 +116,7 @@ public class MusicRecordGUI extends JFrame{
                 if (currentRow == -1) {      // -1 means no row is selected. Display error message.
                     JOptionPane.showMessageDialog(rootPane, "Please choose a record to delete");
                 }
-                boolean deleted = musicDatamodel.deleteRow(currentRow);
+                boolean deleted = musicRecord.deleteRow(currentRow);
                 if (deleted) {
                     Main.loadAllMusics();
                 } else {
