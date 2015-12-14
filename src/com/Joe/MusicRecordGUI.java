@@ -1,6 +1,8 @@
 package com.Joe;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +11,7 @@ import java.awt.event.WindowListener;
 
 public class MusicRecordGUI extends JFrame implements WindowListener{
     private JPanel rootPanel;
+    private JTabbedPane tabbedPane;
     private JTextField recordArtist;
     private JTextField recordTitle;
     private JTextField sellingPrice;
@@ -25,11 +28,39 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
 
     //Options for the combobox
     final private String opt0 = "Default";
-    final private String opt1 = "Artist Name";
     final private String opt2 = "Record title";
     final private String opt3 = "Selling Price";
 
-    MusicRecordGUI(final MusicData musicDatamodel) {
+    MusicRecordGUI(final MusicData musicDatamodel, final MusicData cosigner_info_display, final MusicData sales_records) {
+
+        tabbedPane = new JTabbedPane();
+
+        ChangeListener changeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+                int index = sourceTabbedPane.getSelectedIndex();
+                System.out.println("Tab Changed To: "+sourceTabbedPane.getTitleAt(index));
+                System.out.println("Tab Index Number: "+index);
+                if(index==0){
+                    musicDatamodel.fireTableDataChanged();
+                    //musicDatamodel.search("Default","",index);
+                }
+                else if(index==1){
+                    cosigner_info_display.fireTableDataChanged();
+                   // cosigner_info_display.search("Default","",index);
+                }
+                else if(index==2){
+                    sales_records.fireTableDataChanged();
+                    //sales_records.search("Default","",index+1);
+                    System.out.println("This is the sales tab!");
+                }
+            }
+        };
+        tabbedPane.addChangeListener(changeListener);
+        rootPanel.add(tabbedPane);
+        tabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
+        tabbedPane.add("Sales Record",new SalesRecords(sales_records));
 
         musicRecordTable.setGridColor(Color.BLACK);
         musicRecordTable.setModel(musicDatamodel);
@@ -41,7 +72,6 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         searchBycomboBox.addItem(opt0);
-        searchBycomboBox.addItem(opt1);
         searchBycomboBox.addItem(opt2);
         searchBycomboBox.addItem(opt3);
 
@@ -111,15 +141,13 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
                 System.exit(0);
             }
         });
-        /*searchButton.addActionListener(new ActionListener() {
+       /* searchButton.addActionListener(new ActionListener() {
             String searchBy="";
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchBy = searchField.getText();
-                if (searchBycomboBox.getSelectedItem().equals(opt0)) {
-                    ("Default","",1);
-                }else if (searchBycomboBox.getSelectedItem().equals(opt1)){
-                    musicDatamodel.search(CreateTables.C_NAME,searchBy,1);
+               // if (searchBycomboBox.getSelectedItem().equals(opt0)) {
+                   // musicDatamodel.search(CreateTables.C_NAME,searchBy,1);
                 }
             }
         });*/

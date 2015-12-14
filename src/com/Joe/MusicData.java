@@ -1,22 +1,25 @@
 package com.Joe;
 
 import javax.swing.table.AbstractTableModel;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MusicData extends AbstractTableModel {
 
     private int rowCount = 0;
     private int colCount = 0;
     ResultSet resultSet;
+    Statement statement;
+    Connection conn;
 
     public MusicData(ResultSet rs) {
         this.resultSet = rs;
         setup();
     }
 
-    private void setup() {
+    private void setup(){
+        countRows();
+    }
+    /*private void setup() {
 
         countRows();
 
@@ -27,9 +30,9 @@ public class MusicData extends AbstractTableModel {
             System.out.println("Error counting columns" + se);
         }
 
-    }
+    }*/
 
-    private void countRows() {
+    /*private void countRows() {
         rowCount = 0;
         try {
             //Move cursor to the start...
@@ -52,11 +55,47 @@ public class MusicData extends AbstractTableModel {
         countRows();
         return rowCount;
     }
+    @Override
+    public int getColumnCount() {
+        try {
+            colCount = resultSet.getMetaData().getColumnCount();
+        } catch (SQLException se) {
+            System.out.println(se);
+            System.out.println("Error created by get column count");
+        }
+        return colCount;
+    }*/
+    private void countRows(){
+        rowCount=0;
+        try{
+            resultSet.beforeFirst();
+            while (resultSet.next()){
+                rowCount++;
+            }
+            resultSet.beforeFirst();
+        }catch(SQLException se){
+            System.out.println("An Error Occurred Counting Rows. "+se);
+        }
+    }
+
+
+    @Override
+    public int getRowCount() {
+        countRows();
+        return rowCount;
+    }
 
     @Override
     public int getColumnCount() {
+        try{
+            colCount=resultSet.getMetaData().getColumnCount();
+        }catch(SQLException se){
+            System.out.println(se);
+            System.out.println("Error created by get column count");
+        }
         return colCount;
     }
+
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -86,6 +125,11 @@ public class MusicData extends AbstractTableModel {
             System.out.println("Delete row error " + se);
             return false;
         }
+    }
+
+    public void updateResultSet(ResultSet newRS){
+        resultSet = newRS;
+        setup();
     }
 
     public boolean insertRecordRow(String consignerName, String title, String artist, int sellingPrice) {
@@ -127,5 +171,107 @@ public class MusicData extends AbstractTableModel {
         }
 
     }
+    /**public void search(String selField, String searchString, int tabIndex) {
+         The ideas behind this method are entirely thanks to the genius of Anna
+         Coding is copied from Malcolm's project
+
+        if(tabIndex==0){
+            if (selField.equals("Default")) {
+                try {
+                    this.resultSet = statement.executeQuery("SELECT * FROM " + Main.MUSICRECORD_TABLE_NAME + " WHERE Main.CONSIGNER_NAME = *; ");
+                }catch(SQLException se){
+                    System.out.println("Error resetting to default results");
+                    System.out.println(se);
+                }
+            } else {
+
+                String sqlToRun = "SELECT * FROM music_records WHERE " +
+                        selField + " LIKE ?";
+                PreparedStatement ps = null;
+                try {
+                    ps = conn.prepareStatement(sqlToRun);
+                    ps.setString(1, "%" + searchString + "%");
+                    this.resultSet = ps.executeQuery();
+                } catch (SQLException sqle) {
+                    System.out.println("Unable to fetch search results.");
+                }
+            }
+            this.fireTableDataChanged();
+        }//Search the consigners table
+        else if(tabIndex==1){
+            if(selField.equals("Default")){
+                try{
+                    this.resultSet = statement.executeQuery("SELECT * FROM consigner_info");
+                    this.fireTableDataChanged();
+                }catch(SQLException se){
+                    System.out.println("An error ocurred while trying reset to default search.");
+                    System.out.println(se);
+                }
+            }else {
+                String sqlToRun="SELECT * FROM consigner_info WHERE "+selField+" LIKE ?";
+                PreparedStatement ps = null;
+                try{
+                    ps=conn.prepareStatement(sqlToRun);
+                    ps.setString(1,"%"+searchString+"%");
+                    this.resultSet=ps.executeQuery();
+                }catch(SQLException se){
+                    System.out.println("Unable to fetch search results");
+                    System.out.println(se);
+                }
+            }
+            this.fireTableDataChanged();
+        }
+        else if(tabIndex==2){
+            //this is the sold records updater
+            if(selField=="Default"){
+                try{
+                    this.resultSet= statement.executeQuery("SELECT * FROM music_records");
+                    this.fireTableDataChanged();
+                }catch (SQLException se){
+                    System.out.println(se);
+
+                }
+            }
+        }
+        else if(tabIndex==3){
+            if(selField=="Default"){
+                try{
+
+                    this.resultSet=statement.executeQuery("SELECT * FROM consignerSales");
+                    this.fireTableDataChanged();
+
+                }catch (SQLException se){
+                    System.out.println(se);
+
+                }
+            }
+        }
+        else if(tabIndex==4){
+            if(selField=="Default"){
+                try {
+                    this.resultSet = statement.executeQuery("Select * FROM sales_table;");
+                    this.fireTableDataChanged();
+                }catch(SQLException se){
+                    System.out.println(se);
+                }
+            }
+        }
+    }
+    public void searchPrice(String selField, double searchPrice) {
+       The ideas behind this method are entirely thanks to the genius of Anna
+        String sqlToRun = "SELECT * FROM record_catalog WHERE " +
+                selField + " <= ?";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sqlToRun);
+            ps.setDouble(1, searchPrice);
+            this.resultSet = ps.executeQuery();
+        } catch (SQLException sqle) {
+            System.out.println("Unable to fetch search results.");
+            System.out.println(sqle);
+        }
+
+        this.fireTableDataChanged();
+    }*/
 }
 

@@ -23,8 +23,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        CreateTables ct = new CreateTables();
-
         if (!setup()) {
             System.exit(-1);
         }
@@ -34,7 +32,8 @@ public class Main {
         }
 
         //If no errors, then start GUI
-        MusicRecordGUI tableGUI = new MusicRecordGUI(musicDataModel);
+        MusicRecordGUI tableGUI = new MusicRecordGUI(musicDataModel,musicDataModel,musicDataModel);
+        CreateTables ct = new CreateTables();
 
     }
 
@@ -51,8 +50,10 @@ public class Main {
             rs = statement.executeQuery(getAllData);
 
             if (musicDataModel == null) {
-                //If there's no current MusicDataModel then create one
+                //If there's no current musicDataModel then create one
                 musicDataModel = new MusicData(rs);
+            }else{
+                musicDataModel.updateResultSet(rs);
             }
                 return true;
         } catch (Exception e) {
@@ -92,6 +93,7 @@ public class Main {
                 String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")";
                 System.out.println(addDataSQl);
                 statement.executeUpdate(addDataSQl);
+
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
                 statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50)";

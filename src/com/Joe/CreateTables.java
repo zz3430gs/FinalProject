@@ -36,7 +36,8 @@ public class CreateTables {
         try {
             if (!ConsignerTableExists()) {
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
-                String createcosignerTableSQL = "CREATE TABLE " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
+                String createcosignerTableSQL = "CREATE TABLE IF NOT EXISTS " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
+                System.out.println(createcosignerTableSQL);
                 statement.executeUpdate(createcosignerTableSQL);
                 insert_into_consigner_info();
                 System.out.println("Created consigners_info table");
@@ -91,9 +92,8 @@ public class CreateTables {
 
     public boolean ConsignerTableExists() throws SQLException{
         String CheckTableExists = "SHOW TABLES LIKE '"+ CONSIGNER_TABLE_NAME + "'";
-        System.out.println(CheckTableExists);
-        ResultSet rs = statement.executeQuery(CheckTableExists);
-        if (rs.next()){
+        ResultSet consignerRs = Main.statement.executeQuery(CheckTableExists);
+        if (consignerRs.next()){
             return true;
         }else {
             return false;
