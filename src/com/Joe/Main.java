@@ -89,27 +89,29 @@ public class Main {
 
                 System.out.println("Created music_records table");
 
-
-                    String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50)";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50);";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Alex','Born to Run','Bruce Springsteen',27.99);";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30);";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Michelle','Tunnel of Love','Bruce Springsteen',21.99);";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jason','The Man Who Sold the World','David Bowe',15);";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Charlie','Saturday Night Fever','Various Artists', 10.99)";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
-                    statement.executeUpdate(addDataSQl);
-                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
-                    statement.executeUpdate(addDataSQl);
+                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")";
+                System.out.println(addDataSQl);
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50)";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jimmy','Back in Black','AC/DC',20.50);";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Alex','Born to Run','Bruce Springsteen',27.99);";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30);";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Michelle','Tunnel of Love','Bruce Springsteen',21.99);";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jason','The Man Who Sold the World','David Bowe',15);";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Charlie','Saturday Night Fever','Various Artists', 10.99)";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
+                statement.executeUpdate(addDataSQl);
+                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
+                statement.executeUpdate(addDataSQl);
 
             }
 
