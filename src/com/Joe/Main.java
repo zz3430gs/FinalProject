@@ -89,11 +89,11 @@ public class Main {
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
                 String createTableSQL = "CREATE TABLE " + MUSICRECORD_TABLE_NAME + " (" + PK_COLUMN + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + TITLE_COLUMN + " varchar(50), " + RECORD_ARTIST + " varchar(50), " + SELLING_PRICE + " int, PRIMARY KEY(" + PK_COLUMN + "))";
                 System.out.println(createTableSQL);
-                insert_into_record_table();
+                //insert_into_record_table();
                 statement.executeUpdate(createTableSQL);
                 System.out.println("Created music_records table");
-
-                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
+                insert_into_record_table();
+                /*String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
                 System.out.println(addDataSQl);
                 statement.executeUpdate(addDataSQl);
                 //addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
@@ -115,7 +115,7 @@ public class Main {
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
                 statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
-                statement.executeUpdate(addDataSQl);
+                statement.executeUpdate(addDataSQl);*/
 
             }
             return true;
@@ -135,6 +135,16 @@ public class Main {
     public static boolean insert_into_record_table(){
         try{
             statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('James','Back in Black','AC/DC',20)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Mark','Back in Black','AC/DC',20.50)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jimmy','Back in Black','AC/DC',20.50)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Alex','Born to Run','Bruce Springsteen',27.99)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Michelle','Tunnel of Love','Bruce Springsteen',21.99)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jason','The Man Who Sold the World','David Bowe',15)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Charlie','Saturday Night Fever','Various Artists', 10.99)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Anna','Too Dark Park','Skinny Puppy',15)");
+            statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jamie','Slippery When Wet','Bon Jovi',19.99)");
+
             return true;
         }
         catch (SQLException se){
