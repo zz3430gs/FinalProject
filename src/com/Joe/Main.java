@@ -23,6 +23,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        CreateTables ct = new CreateTables();
+
         if (!setup()) {
             System.exit(-1);
         }
@@ -36,7 +38,7 @@ public class Main {
 
     }
 
-    //Create or recreate a ResultSet containing the whole database, and give it to movieDataModel
+    //Create or recreate a ResultSet containing the whole database, and give it to musicDataModel
     public static boolean loadAllMusics() {
 
         try {
@@ -54,7 +56,7 @@ public class Main {
             }
                 return true;
         } catch (Exception e) {
-            System.out.println("Error loading or reloading movies");
+            System.out.println("Error loading or reloading musics");
             System.out.println(e);
             e.printStackTrace();
             return false;
@@ -81,13 +83,36 @@ public class Main {
             if (!musicTableExists()) {
 
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
-                String createTableSQL = "CREATE TABLE " + MUSICRECORD_TABLE_NAME + " (" + PK_COLUMN + " int NOT NULL AUTO_INCREMENT,"+CONSIGNER_NAME +" varchar(50), " + TITLE_COLUMN + " varchar(50), " + RECORD_ARTIST + " String, " + SELLING_PRICE + " int, PRIMARY KEY(" + PK_COLUMN + "))";
+                String createTableSQL = "CREATE TABLE " + MUSICRECORD_TABLE_NAME + " (" + PK_COLUMN + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + TITLE_COLUMN + " varchar(50), " + RECORD_ARTIST + " varchar(50), " + SELLING_PRICE + " int, PRIMARY KEY(" + PK_COLUMN + "))";
                 System.out.println(createTableSQL);
                 statement.executeUpdate(createTableSQL);
 
                 System.out.println("Created music_records table");
-                //TODO Create some example or put some data into table
+
+
+                    String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50)";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50);";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Alex','Born to Run','Bruce Springsteen',27.99);";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30);";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Michelle','Tunnel of Love','Bruce Springsteen',21.99);";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jason','The Man Who Sold the World','David Bowe',15);";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Charlie','Saturday Night Fever','Various Artists', 10.99)";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
+                    statement.executeUpdate(addDataSQl);
+                    addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
+                    statement.executeUpdate(addDataSQl);
+
             }
+
             return true;
 
         } catch (SQLException se) {
@@ -95,6 +120,7 @@ public class Main {
             se.printStackTrace();
             return false;
         }
+
     }
 
     private static boolean musicTableExists() throws SQLException {
@@ -124,6 +150,9 @@ public class Main {
                 statement.close();
                 System.out.println("Statement closed");
             }
+            else{
+
+            }
         } catch (SQLException se){
             //Closing the connection could throw an exception too
             se.printStackTrace();
@@ -133,6 +162,9 @@ public class Main {
             if (conn != null) {
                 conn.close();
                 System.out.println("Database connection closed");
+            }
+            else{
+                return;
             }
         }
         catch (SQLException se) {

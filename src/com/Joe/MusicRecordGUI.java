@@ -1,11 +1,13 @@
 package com.Joe;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-
-public class MusicRecordGUI extends JFrame {
+public class MusicRecordGUI extends JFrame implements WindowListener{
     private JPanel rootPanel;
     private JTextField recordArtist;
     private JTextField recordTitle;
@@ -15,16 +17,33 @@ public class MusicRecordGUI extends JFrame {
     private JButton quitButton;
     private JTextField consignerName;
     private JTable musicRecordTable;
+    private JComboBox searchBycomboBox;
+    private JTextField searchField;
+    private JLabel searchLabel;
+    private JButton searchButton;
+    private JButton sellRecordButton;
+
+    //Options for the combobox
+    final private String opt0 = "Default";
+    final private String opt1 = "Artist Name";
+    final private String opt2 = "Record title";
+    final private String opt3 = "Selling Price";
 
     MusicRecordGUI(final MusicData musicDatamodel) {
 
+        musicRecordTable.setGridColor(Color.BLACK);
         musicRecordTable.setModel(musicDatamodel);
 
         setContentPane(rootPanel);
         pack();
-        setSize(500, 500);
+        setSize(600, 600);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        searchBycomboBox.addItem(opt0);
+        searchBycomboBox.addItem(opt1);
+        searchBycomboBox.addItem(opt2);
+        searchBycomboBox.addItem(opt3);
 
 
         addNewRecordButton.addActionListener(new ActionListener() {
@@ -39,7 +58,7 @@ public class MusicRecordGUI extends JFrame {
                     return;
                 }
                 String consignername = consignerName.getText();
-                if (consignername == null || consignername.trim().equals("")){
+                if (consignername == null || consignername.trim().equals("")) {
                     JOptionPane.showMessageDialog(rootPane, "Please enter a consigner name");
                     return;
                 }
@@ -51,7 +70,7 @@ public class MusicRecordGUI extends JFrame {
                 int sellPrice;
                 try {
                     sellPrice = Integer.parseInt(sellingPrice.getText());
-                    if (sellPrice >= -0) {
+                    if (sellPrice <= -0) {
                         throw new NumberFormatException("Please enter a positive number");
                     }
                 } catch (NumberFormatException ne) {
@@ -59,9 +78,14 @@ public class MusicRecordGUI extends JFrame {
                             "The price number can't be negative");
                     return;
                 }
+                System.out.println("Adding " + title + " " + consignername + " " + name + " " + sellPrice);
+                boolean insertedRow = musicDatamodel.insertRow(consignername, title, name, sellPrice);
 
+                if (!insertedRow) {
+                    JOptionPane.showMessageDialog(rootPane, "Error adding new Music Record");
+                }
+                musicDatamodel.fireTableDataChanged();
             }
-
         });
 
         deleteRecordButton.addActionListener(new ActionListener() {
@@ -87,5 +111,47 @@ public class MusicRecordGUI extends JFrame {
                 System.exit(0);
             }
         });
+        searchButton.addActionListener(new ActionListener() {
+            String searchBy="";
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchBy = searchField.getText();
+                if (searchBycomboBox.getSelectedItem().equals(opt0)) {
+                    musicDatamodel.search("Default","",1);
+                }else if (searchBycomboBox.getSelectedItem().equals(opt1)){
+                    musicDatamodel.search(CreateTables.C_NAME,searchBy,1);
+                }
+            }
+        });
+    }
+
+
+    public void windowClosing(WindowEvent e) {
+        System.out.println("closing");
+        Main.shutdown();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 }
