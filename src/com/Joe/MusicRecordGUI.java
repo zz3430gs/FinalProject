@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class MusicRecordGUI extends JFrame implements WindowListener{
+public class MusicRecordGUI extends JFrame{
     private JPanel rootPanel;
-    private JTabbedPane tabbedPane;
+    //private JTabbedPane tabbedPane;
     private JTextField recordArtist;
     private JTextField recordTitle;
     private JTextField sellingPrice;
@@ -20,15 +20,15 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
     private JButton quitButton;
     private JTextField consignerName;
     private JTable musicRecordTable;
-    private JComboBox searchBycomboBox;
+    //private JComboBox searchBycomboBox;
     private JButton sellRecordButton;
 
 
-    MusicRecordGUI(final MusicData musicDatamodel, final MusicData cosigner_info_display, final MusicData sales_records) {
+    MusicRecordGUI(final MusicData musicDatamodel){//, final MusicData cosigner_info_display, final MusicData sales_records) {
 
-        tabbedPane = new JTabbedPane();
+        //tabbedPane = new JTabbedPane();
 
-        ChangeListener changeListener = new ChangeListener() {
+       /* ChangeListener changeListener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
@@ -52,17 +52,18 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
         };
         tabbedPane.addChangeListener(changeListener);
         rootPanel.add(tabbedPane);
+        //tabbedPane.add("Music Record", new MusicRecordGUI(musicDatamodel, cosigner_info_display, sales_records));
         tabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
-        tabbedPane.add("Sales Record",new SalesRecords(sales_records));
+        tabbedPane.add("Sales Record",new SalesRecords(sales_records));*/
 
         musicRecordTable.setGridColor(Color.BLACK);
         musicRecordTable.setModel(musicDatamodel);
 
-        setContentPane(rootPanel);
-        pack();
-        setSize(600, 600);
-        setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+       // setContentPane(rootPanel);
+        //pack();
+        //setSize(600, 600);
+        //setVisible(true);
+        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         addNewRecordButton.addActionListener(new ActionListener() {
@@ -98,9 +99,9 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
                     return;
                 }
                 System.out.println("Adding " + title + " " + consignername + " " + name + " " + sellPrice);
-                boolean insertedRow = musicDatamodel.insertRecordRow(consignername, title, name, sellPrice);
+                boolean insertRecordRow = musicDatamodel.insertRecordRow(consignername, title, name, sellPrice);
 
-                if (!insertedRow) {
+                if (!insertRecordRow) {
                     JOptionPane.showMessageDialog(rootPane, "Error adding new Music Record");
                 }
                 musicDatamodel.fireTableDataChanged();
@@ -148,7 +149,7 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
         Main.shutdown();
     }
 
-    @Override
+/*    @Override
     public void windowClosed(WindowEvent e) {
     }
 
@@ -170,5 +171,5 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-    }
+    }*/
 }

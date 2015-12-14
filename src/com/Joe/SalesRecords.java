@@ -8,6 +8,8 @@ public class SalesRecords extends JPanel{
 
     public SalesRecords(final MusicData salesRecords){
 
+        salesTable.setModel(salesRecords);
+
 
     }
 

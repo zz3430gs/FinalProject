@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Joe on 12/14/2015.
- */
 public class Consigner_Info extends JPanel {
     private JPanel rootPanel;
     private JTable consignerTable;
@@ -18,10 +15,10 @@ public class Consigner_Info extends JPanel {
     private JTextField consignerEmail;
     private JTextField consignerAddress;
 
-    public Consigner_Info(final MusicData consigner_info_model){
+    public Consigner_Info(final MusicData consigner_info_Display){
 
         consignerTable.setGridColor(Color.black);
-        consignerTable.setModel(consigner_info_model);
+        consignerTable.setModel(consigner_info_Display);
 
 
         addConsignerButton.addActionListener(new ActionListener() {
@@ -34,7 +31,7 @@ public class Consigner_Info extends JPanel {
                     System.out.println("PLease enter in data and don't leave empty space");
                 }
                 System.out.println("Adding "+ cosignerName + " "+cosignerAddress+ " "+cosignerEmail);
-                boolean cosignerInsertRow = consigner_info_model.insertCosignerRow(cosignerName, cosignerEmail , cosignerAddress);
+                boolean cosignerInsertRow = consigner_info_Display.insertCosignerRow(cosignerName, cosignerEmail , cosignerAddress);
 
                 if (!cosignerInsertRow) {
                     JOptionPane.showMessageDialog(rootPanel, "Error adding new cosigner info");
@@ -50,7 +47,7 @@ public class Consigner_Info extends JPanel {
                 if (currentRow == -1) {      // -1 means no row is selected. Display error message.
                     JOptionPane.showMessageDialog(rootPanel, "Please choose a consigner to delete");
                 }
-                boolean deleted = consigner_info_model.deleteRow(currentRow);
+                boolean deleted = consigner_info_Display.deleteRow(currentRow);
                 if (deleted) {
                     Main.loadAllMusics();
                 } else {

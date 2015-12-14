@@ -1,5 +1,6 @@
 package com.Joe;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
 
@@ -151,6 +152,29 @@ public class MusicData extends AbstractTableModel {
             return false;
         }
     }
+    public boolean insert_Record_To_Table(String artistName,String recordTitle,double price, String consignerName){
+        PreparedStatement ps = null;
+        try{
+
+            //insert into record_catalog (Artist_Name,Album_Title,Price,Shelved_Date,Sold_Or_Not,consigners_C_ID) Values('Dosh','Tommy',20.75,'2015-03-15',false,5);
+
+            String preparedInsertString="INSERT INTO music_records (record_artist,record_title,selling_price,consigner_name) VALUES(?,?,?,?)";
+            resultSet.moveToInsertRow();
+            ps=Main.conn.prepareStatement(preparedInsertString);
+            ps.setString(1,artistName);
+            ps.setString(2,recordTitle);
+            ps.setDouble(3,price);
+            ps.setString(4,consignerName);
+            ps.executeUpdate();
+            this.fireTableDataChanged();
+            ps.close();
+            return true;
+        }catch(SQLException se){
+            System.out.println(se);
+            System.out.println("An error occurred adding a row.");
+            return false;
+        }
+    }
 
     public boolean insertCosignerRow(String consignerName, String consignerEmail, String address) {
 
@@ -171,107 +195,26 @@ public class MusicData extends AbstractTableModel {
         }
 
     }
-    /**public void search(String selField, String searchString, int tabIndex) {
-         The ideas behind this method are entirely thanks to the genius of Anna
-         Coding is copied from Malcolm's project
-
-        if(tabIndex==0){
-            if (selField.equals("Default")) {
-                try {
-                    this.resultSet = statement.executeQuery("SELECT * FROM " + Main.MUSICRECORD_TABLE_NAME + " WHERE Main.CONSIGNER_NAME = *; ");
-                }catch(SQLException se){
-                    System.out.println("Error resetting to default results");
-                    System.out.println(se);
-                }
-            } else {
-
-                String sqlToRun = "SELECT * FROM music_records WHERE " +
-                        selField + " LIKE ?";
-                PreparedStatement ps = null;
-                try {
-                    ps = conn.prepareStatement(sqlToRun);
-                    ps.setString(1, "%" + searchString + "%");
-                    this.resultSet = ps.executeQuery();
-                } catch (SQLException sqle) {
-                    System.out.println("Unable to fetch search results.");
-                }
-            }
+    public boolean insert_Consigner_To_List(String consigner_Name,String address,String E_Mail,String banking_Number){
+        PreparedStatement ps = null;
+        try{
+            String prep_Insert_String="INSERT INTO consigner_info (Consigner_Name,Address,E_Mail,Bank_Account_Number)VALUES(?,?,?)";
+            resultSet.moveToInsertRow() ;
+            ps=Main.conn.prepareStatement(prep_Insert_String);
+            ps.setString(1,consigner_Name);
+            ps.setString(2,address);
+            ps.setString(3,E_Mail);
+            ps.executeUpdate();
             this.fireTableDataChanged();
-        }//Search the consigners table
-        else if(tabIndex==1){
-            if(selField.equals("Default")){
-                try{
-                    this.resultSet = statement.executeQuery("SELECT * FROM consigner_info");
-                    this.fireTableDataChanged();
-                }catch(SQLException se){
-                    System.out.println("An error ocurred while trying reset to default search.");
-                    System.out.println(se);
-                }
-            }else {
-                String sqlToRun="SELECT * FROM consigner_info WHERE "+selField+" LIKE ?";
-                PreparedStatement ps = null;
-                try{
-                    ps=conn.prepareStatement(sqlToRun);
-                    ps.setString(1,"%"+searchString+"%");
-                    this.resultSet=ps.executeQuery();
-                }catch(SQLException se){
-                    System.out.println("Unable to fetch search results");
-                    System.out.println(se);
-                }
-            }
-            this.fireTableDataChanged();
-        }
-        else if(tabIndex==2){
-            //this is the sold records updater
-            if(selField=="Default"){
-                try{
-                    this.resultSet= statement.executeQuery("SELECT * FROM music_records");
-                    this.fireTableDataChanged();
-                }catch (SQLException se){
-                    System.out.println(se);
-
-                }
-            }
-        }
-        else if(tabIndex==3){
-            if(selField=="Default"){
-                try{
-
-                    this.resultSet=statement.executeQuery("SELECT * FROM consignerSales");
-                    this.fireTableDataChanged();
-
-                }catch (SQLException se){
-                    System.out.println(se);
-
-                }
-            }
-        }
-        else if(tabIndex==4){
-            if(selField=="Default"){
-                try {
-                    this.resultSet = statement.executeQuery("Select * FROM sales_table;");
-                    this.fireTableDataChanged();
-                }catch(SQLException se){
-                    System.out.println(se);
-                }
-            }
+            ps.close();
+            JOptionPane.showMessageDialog(null,"You successfully added "+consigner_Name+", Address: "+address+", E-mail: "+E_Mail+", Routing Number: "+banking_Number+".");
+            System.out.println(String.format("You added"));
+            return true;
+        }catch(SQLException se){
+            System.out.println("Insertion of Consigner Information Failed");
+            System.out.println(se);
+            return false;
         }
     }
-    public void searchPrice(String selField, double searchPrice) {
-       The ideas behind this method are entirely thanks to the genius of Anna
-        String sqlToRun = "SELECT * FROM record_catalog WHERE " +
-                selField + " <= ?";
-        PreparedStatement ps = null;
-        try {
-            ps = conn.prepareStatement(sqlToRun);
-            ps.setDouble(1, searchPrice);
-            this.resultSet = ps.executeQuery();
-        } catch (SQLException sqle) {
-            System.out.println("Unable to fetch search results.");
-            System.out.println(sqle);
-        }
-
-        this.fireTableDataChanged();
-    }*/
 }
 

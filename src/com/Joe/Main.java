@@ -20,6 +20,9 @@ public class Main {
     public final static String SELLING_PRICE = "selling_price";
 
     private static MusicData musicDataModel;
+    private static MusicData consigner_info_Display=null;
+    private static MusicData musicDatamodel=null;
+    private static MusicData sales_record=null;
 
     public static void main(String[] args) {
 
@@ -32,8 +35,8 @@ public class Main {
         }
 
         //If no errors, then start GUI
-        MusicRecordGUI tableGUI = new MusicRecordGUI(musicDataModel,musicDataModel,musicDataModel);
-        CreateTables ct = new CreateTables();
+        MainGui tableGUI = new MainGui(musicDatamodel,consigner_info_Display,sales_record);
+
 
     }
 
@@ -90,12 +93,11 @@ public class Main {
 
                 System.out.println("Created music_records table");
 
-                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")";
+                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
                 System.out.println(addDataSQl);
                 statement.executeUpdate(addDataSQl);
-
-                addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
-                statement.executeUpdate(addDataSQl);
+                //addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
+                //statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Mark','Back in Black','AC/DC',20.50)";
                 statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jimmy','Back in Black','AC/DC',20.50);";
