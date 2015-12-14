@@ -1,6 +1,7 @@
 package com.Joe;
 
 import javax.swing.table.AbstractTableModel;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,11 +16,11 @@ public class MusicData extends AbstractTableModel {
         setup();
     }
 
-    private void setup(){
+    private void setup() {
 
         countRows();
 
-        try{
+        try {
             colCount = resultSet.getMetaData().getColumnCount();
 
         } catch (SQLException se) {
@@ -27,6 +28,7 @@ public class MusicData extends AbstractTableModel {
         }
 
     }
+
     private void countRows() {
         rowCount = 0;
         try {
@@ -44,6 +46,7 @@ public class MusicData extends AbstractTableModel {
         }
 
     }
+
     @Override
     public int getRowCount() {
         countRows();
@@ -51,18 +54,18 @@ public class MusicData extends AbstractTableModel {
     }
 
     @Override
-    public int getColumnCount(){
+    public int getColumnCount() {
         return colCount;
     }
 
     @Override
-    public Object getValueAt(int row, int col){
-        try{
+    public Object getValueAt(int row, int col) {
+        try {
             //  System.out.println("get value at, row = " +row);
-            resultSet.absolute(row+1);
-            Object o = resultSet.getObject(col+1);
+            resultSet.absolute(row + 1);
+            Object o = resultSet.getObject(col + 1);
             return o.toString();
-        }catch (SQLException se) {
+        } catch (SQLException se) {
             System.out.println(se);
             //se.printStackTrace();
             return se.toString();
@@ -71,22 +74,21 @@ public class MusicData extends AbstractTableModel {
     }
 
 
-
-
     //Delete row, return true if successful, false otherwise
-    public boolean deleteRow(int row){
+    public boolean deleteRow(int row) {
         try {
             resultSet.absolute(row + 1);
             resultSet.deleteRow();
             //Tell table to redraw itself
             fireTableDataChanged();
             return true;
-        }catch (SQLException se) {
+        } catch (SQLException se) {
             System.out.println("Delete row error " + se);
             return false;
         }
     }
-    public boolean insertRow(String consignerName ,String title, String artist, int sellingPrice) {
+
+    public boolean insertRecordRow(String consignerName, String title, String artist, int sellingPrice) {
 
         try {
             //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
@@ -104,9 +106,26 @@ public class MusicData extends AbstractTableModel {
             System.out.println(e);
             return false;
         }
-
     }
 
+    public boolean insertCosignerRow(String consignerName, String consignerEmail, String address) {
 
+        try {
+            //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
+            resultSet.moveToInsertRow();
+            resultSet.updateString(CreateTables.CONSIGNER_NAME, consignerName);
+            resultSet.updateString(CreateTables.CONSIGNER_EMAIL, consignerEmail);
+            resultSet.updateString(CreateTables.CONSIGNER_ADDRESS, address);
+            resultSet.insertRow();
+            resultSet.moveToCurrentRow();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error adding row");
+            System.out.println(e);
+            return false;
+        }
+
+    }
 }
 

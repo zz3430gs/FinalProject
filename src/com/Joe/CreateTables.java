@@ -7,8 +7,8 @@ public class CreateTables {
 
     static Statement statement = null;
     static Statement statement2 = null;
-    //static Connection conn = null;
-    //static ResultSet rs = null;
+    static Connection conn = null;
+    static ResultSet rs = null;
 
     public final static String CONSIGNER_TABLE_NAME = "consigner_info";
     public final static String PK_Consigner = "consigner_id";
@@ -32,19 +32,18 @@ public class CreateTables {
 
     public void createTable() {
 
-
         System.out.println("Checking if table exists");
         try {
             if (!ConsignerTableExists()) {
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
-                String createTableSQL = "CREATE TABLE " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
-                statement.executeUpdate(createTableSQL);
+                String createcosignerTableSQL = "CREATE TABLE " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
+                statement.executeUpdate(createcosignerTableSQL);
                 insert_into_consigner_info();
                 System.out.println("Created consigners_info table");
             }
             if (!SalesTableExists()){
-                String createTableSQL = "CREATE TABLE IF NOT EXISTS " + SALE_TABLE_NAME + " (" + PK_SALE + "int NOT NULL AUTO_INCREMENT," + C_NAME + " varchar(50),"+SALES_PRICE + "double" + SALESPR + "double," + C_SALESPR + "double," + RECORD_ARTIST + "varchar(50)," + RECORD_TITLE+ "varchar(50)";
-                statement2.executeUpdate(createTableSQL);
+                String createsalesTableSQL = "CREATE TABLE IF NOT EXISTS " + SALE_TABLE_NAME + " (" + PK_SALE + "int NOT NULL AUTO_INCREMENT," + C_NAME + " varchar(50),"+SALES_PRICE + "double" + SALESPR + "double," + C_SALESPR + "double," + RECORD_ARTIST + "varchar(50)," + RECORD_TITLE+ "varchar(50)";
+                statement2.executeUpdate(createsalesTableSQL);
                 insert_record_data_into_sales();
                 System.out.println("Created sales table");
             }

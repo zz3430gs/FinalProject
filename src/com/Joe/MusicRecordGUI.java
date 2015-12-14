@@ -79,7 +79,7 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
                     return;
                 }
                 System.out.println("Adding " + title + " " + consignername + " " + name + " " + sellPrice);
-                boolean insertedRow = musicDatamodel.insertRow(consignername, title, name, sellPrice);
+                boolean insertedRow = musicDatamodel.insertRecordRow(consignername, title, name, sellPrice);
 
                 if (!insertedRow) {
                     JOptionPane.showMessageDialog(rootPane, "Error adding new Music Record");
@@ -111,18 +111,18 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
                 System.exit(0);
             }
         });
-        searchButton.addActionListener(new ActionListener() {
+        /*searchButton.addActionListener(new ActionListener() {
             String searchBy="";
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchBy = searchField.getText();
                 if (searchBycomboBox.getSelectedItem().equals(opt0)) {
-                    musicDatamodel.search("Default","",1);
+                    ("Default","",1);
                 }else if (searchBycomboBox.getSelectedItem().equals(opt1)){
                     musicDatamodel.search(CreateTables.C_NAME,searchBy,1);
                 }
             }
-        });
+        });*/
     }
 
 
