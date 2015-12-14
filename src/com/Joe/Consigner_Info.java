@@ -13,9 +13,6 @@ public class Consigner_Info extends JPanel {
     private JTable consignerTable;
     private JButton addConsignerButton;
     private JButton deleteConsignerButton;
-    private JButton searchButton;
-    private JComboBox comboBox1;
-    private JTextField textField1;
     private JButton quitButton;
     private JTextField consignerName;
     private JTextField consignerEmail;

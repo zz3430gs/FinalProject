@@ -21,15 +21,8 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
     private JTextField consignerName;
     private JTable musicRecordTable;
     private JComboBox searchBycomboBox;
-    private JTextField searchField;
-    private JLabel searchLabel;
-    private JButton searchButton;
     private JButton sellRecordButton;
 
-    //Options for the combobox
-    final private String opt0 = "Default";
-    final private String opt2 = "Record title";
-    final private String opt3 = "Selling Price";
 
     MusicRecordGUI(final MusicData musicDatamodel, final MusicData cosigner_info_display, final MusicData sales_records) {
 
@@ -70,10 +63,6 @@ public class MusicRecordGUI extends JFrame implements WindowListener{
         setSize(600, 600);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        searchBycomboBox.addItem(opt0);
-        searchBycomboBox.addItem(opt2);
-        searchBycomboBox.addItem(opt3);
 
 
         addNewRecordButton.addActionListener(new ActionListener() {
