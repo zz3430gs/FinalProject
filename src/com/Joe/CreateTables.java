@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class CreateTables {
 
-    static Statement statement = null;
+    //static Statement statement = null;
     static Connection conn = null;
     static ResultSet rs = null;
     static ResultSet saleRS = null;
@@ -40,16 +40,19 @@ public class CreateTables {
             if (!ConsignerTableExists()) {
                 //Create a table in the database with 4 columns: Consigner name, record title, record artist and selling price
                 String createcosignerTableSQL = "CREATE TABLE " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
-                //System.out.println(createcosignerTableSQL);
-                statement.executeUpdate(createcosignerTableSQL);
-                insert_into_consigner_info();
+                System.out.println(createcosignerTableSQL);
+                Main.statement.executeUpdate(createcosignerTableSQL);
+                //insert_into_consigner_info();
                 System.out.println("Created consigners_info table");
+                insert_into_consigner_info();
             }
             if (!SalesTableExists()){
-                String createsalesTableSQL = "CREATE TABLE IF NOT EXISTS" + SALE_TABLE_NAME + " (" + PK_SALE + "int NOT NULL AUTO_INCREMENT," + C_NAME + " varchar(50),"+SALES_PRICE + "double" + SALESPR + "double," + C_SALESPR + "double," + RECORD_ARTIST + "varchar(50)," + RECORD_TITLE+ "varchar(50)";
-                statement.executeUpdate(createsalesTableSQL);
-                insert_record_data_into_sales();
+            String createsalesTableSQL = "CREATE TABLE IF NOT EXISTS sales_tables (sales_id int NOT NULL AUTO_INCREMENT, consigner_name varchar(50),sales_price double, our60% double,c_40% double,record_artist varchar(50),record_title varchar(50), PRIMARY KEY (sales_id))";
+                System.out.println(createsalesTableSQL);
+                Main.statement.executeUpdate(createsalesTableSQL);
+                //insert_record_data_into_sales();
                 System.out.println("Created sales table");
+                insert_record_data_into_sales();
             }
         } catch (SQLException se) {
             System.out.println(se);
@@ -59,16 +62,16 @@ public class CreateTables {
     public boolean insert_into_consigner_info(){
         try {
 
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Mark','mark@yahoo.com','4029 Broad Ave N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jimmy','jboi@gmail.com','3029 Hudson Ave N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('James','james@gmail.com','252 Knock Ave N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Alex','Al@hotmail.com','6th Street S');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Lious','Lu@yahoo.com','7th Street N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Michelle','Mich@gmail.com','3rd Street W');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jason','Jas@yahoo.com','3000 Oliver Ave N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Charlie','Charles@hotmail.com','254 WestGate N');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Anna','Anne@gmail.com','44th Street S');");
-            statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jamie','Jamie@yahoo.com','767 Dowe Ave S');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Mark','mark@yahoo.com','4029 Broad Ave N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jimmy','jboi@gmail.com','3029 Hudson Ave N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('James','james@gmail.com','252 Knock Ave N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Alex','Al@hotmail.com','6th Street S');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Lious','Lu@yahoo.com','7th Street N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Michelle','Mich@gmail.com','3rd Street W');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jason','Jas@yahoo.com','3000 Oliver Ave N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Charlie','Charles@hotmail.com','254 WestGate N');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Anna','Anne@gmail.com','44th Street S');");
+            Main.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jamie','Jamie@yahoo.com','767 Dowe Ave S');");
         return true;
         }
         catch (SQLException se){
@@ -80,7 +83,7 @@ public class CreateTables {
     public boolean insert_record_data_into_sales(){
         //Test data for table not belong to consigner
         try {
-            statement.executeUpdate("insert into sales_table(consigner_name, sales_price, our60%, c_40%, record_artist, record_title) VALUES ('Terry',30,18,12,'Mariah Carey','Without You')");
+            Main.statement.executeUpdate("insert into sales_table(consigner_name, sales_price, our60%, c_40%, record_artist, record_title) VALUES ('Terry',30,18,12,'Mariah Carey','Without You')");
             return true;
 
         }
@@ -100,7 +103,7 @@ public class CreateTables {
             }
 
             String getAllData = "SELECT * FROM " + CONSIGNER_TABLE_NAME;
-            rs = statement.executeQuery(getAllData);
+            rs = Main.statement.executeQuery(getAllData);
             return true;
         } catch (Exception e) {
             System.out.println("Error loading Consigner data");
@@ -115,7 +118,7 @@ public class CreateTables {
                 rs.close();
             }
             String getAllData = "SELECT * FROM " + SALE_TABLE_NAME;
-            rs = statement.executeQuery(getAllData);
+            rs = Main.statement.executeQuery(getAllData);
             return true;
         }
         catch (SQLException se){
@@ -139,7 +142,7 @@ public class CreateTables {
     public boolean SalesTableExists() throws SQLException{
         String CheckTableExists = "SHOW TABLES LIKE '"+ SALE_TABLE_NAME + "'";
         System.out.println(CheckTableExists);
-        ResultSet rs = statement.executeQuery(CheckTableExists);
+        ResultSet rs = Main.statement.executeQuery(CheckTableExists);
         if (rs.next()){
             return true;
         }else {

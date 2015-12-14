@@ -9,8 +9,8 @@ public class MusicData extends AbstractTableModel {
     private int rowCount = 0;
     private int colCount = 0;
     ResultSet resultSet;
-    Statement statement;
-    Connection conn;
+    //Statement statement;
+    //Connection conn;
 
     public MusicData(ResultSet rs) {
         this.resultSet = rs;

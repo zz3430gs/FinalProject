@@ -6,7 +6,7 @@ public class Main {
     private static String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "music_shop";
     private static final String USER = "root";
-    private static final String PASS = "038292Jl";
+    private static final String PASS = "itecitec";
 
     static Statement statement = null;
     static Connection conn = null;
@@ -93,7 +93,7 @@ public class Main {
                 statement.executeUpdate(createTableSQL);
                 System.out.println("Created music_records table");
 
-                /*String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
+                String addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "("+ CONSIGNER_NAME +", " + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")"+ "VALUES ('James','Dark Side of the Moon','Pink Floyd',20)";
                 System.out.println(addDataSQl);
                 statement.executeUpdate(addDataSQl);
                 //addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('James','Dark Side of the Moon','Pink Floyd',20)";
@@ -115,7 +115,7 @@ public class Main {
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Anna','Too Dark Park','Skinny Puppy',15)";
                 statement.executeUpdate(addDataSQl);
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
-                statement.executeUpdate(addDataSQl);*/
+                statement.executeUpdate(addDataSQl);
 
             }
             return true;
