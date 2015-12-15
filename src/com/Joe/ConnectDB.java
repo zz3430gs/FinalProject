@@ -11,9 +11,12 @@ public class ConnectDB {
     private static final String PASS = "038292Jl";
 
     static Statement statement = null;
+    static Statement statementforSales = null;
+    static Statement statementforRecords= null;
+    static Statement statementforConsigners= null;
     static Connection conn = null;
     static ResultSet rs = null;
-    static ResultSet rs1 = null;
+    static ResultSet rsForRecordTab = null;
     static ResultSet rs2 = null;
 
     static MusicData Consigner_info_Display = null;
@@ -30,6 +33,9 @@ public class ConnectDB {
             }
             conn = DriverManager.getConnection(DB_CONNECTION_URL + DB_NAME, USER, PASS);
             statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statementforConsigners= conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statementforRecords= conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statementforSales= conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             CreateTables createtable = new CreateTables();
             loadAllRecordData();
             loadAllConsignerInfo();
@@ -49,9 +55,12 @@ public class ConnectDB {
 
     public static void shutdownResources() throws SQLException {
         statement.close();
+        statementforRecords.close();
+        statementforSales.close();
+        statementforConsigners.close();
         conn.close();
         rs.close();
-        rs1.close();
+        rsForRecordTab.close();
         rs2.close();
 
     }
@@ -64,7 +73,7 @@ public class ConnectDB {
             }
 
             String getAllData = "SELECT * FROM " + CreateTables.CONSIGNER_TABLE_NAME + ";";
-            rs = ConnectDB.statement.executeQuery(getAllData);
+            rs = ConnectDB.statementforConsigners.executeQuery(getAllData);
             return true;
         } catch (Exception e) {
             System.out.println("Error loading Consigner data");
@@ -80,7 +89,7 @@ public class ConnectDB {
                 rs.close();
             }
             String getAllData = "SELECT * FROM " + CreateTables.SALE_TABLE_NAME + ";";
-            rs = ConnectDB.statement.executeQuery(getAllData);
+            rs = ConnectDB.statementforSales.executeQuery(getAllData);
             return true;
         } catch (SQLException se) {
             System.out.println(se);
@@ -95,7 +104,7 @@ public class ConnectDB {
                 rs.close();
             }
             String getAllData = "SELECT * FROM " + CreateTables.MUSICRECORD_TABLE_NAME + ";";
-            rs = ConnectDB.statement.executeQuery(getAllData);
+            rs = ConnectDB.statementforRecords.executeQuery(getAllData);
             return true;
         } catch (SQLException se) {
             System.out.println(se);
@@ -106,17 +115,17 @@ public class ConnectDB {
 
     public static void createRecordModel() {
         try {
-            if (rs != null) {
-                rs.close();
+            if (rsForRecordTab != null) {
+                rsForRecordTab.close();
             }
             if (musicRecord == null) {
                 System.out.println("The data model was null, making new record catalog model...");
-                rs = ConnectDB.statement.executeQuery("SELECT * FROM music_records");
-                musicRecord = new MusicData(rs);
+                rsForRecordTab = ConnectDB.statementforRecords.executeQuery("SELECT * FROM music_records");
+                musicRecord = new MusicData(rsForRecordTab);
 
             } else {
                 System.out.println("Found the data model!!!");
-                musicRecord.updateResultSet(rs);
+                musicRecord.updateResultSet(rsForRecordTab);
             }
         } catch (SQLException se) {
             System.out.println("Error with Creating recordmodel");
@@ -125,17 +134,17 @@ public class ConnectDB {
     }
     public static void createConsignerModel() {
         try {
-            if (rs1 != null) {
-                rs1.close();
+            if (rs != null) {
+                rs.close();
             }
             if (Consigner_info_Display == null) {
                 System.out.println("The data model was null, making new consigner model...");
-                rs1 = ConnectDB.statement.executeQuery("SELECT * FROM consigner_info");
-                Consigner_info_Display = new MusicData(rs1);
+                rs = ConnectDB.statementforConsigners.executeQuery("SELECT * FROM consigner_info");
+                Consigner_info_Display = new MusicData(rs);
 
             } else {
                 System.out.println("Found the data model");
-                Consigner_info_Display.updateResultSet(rs1);
+                Consigner_info_Display.updateResultSet(rs);
             }
         } catch (SQLException se) {
             System.out.println("Error with Create RecordCatalog Method has ocurred.");
@@ -149,7 +158,7 @@ public class ConnectDB {
             }
             if (sales_record == null) {
                 System.out.println("The data model was null, making new sales model...");
-                rs2 = ConnectDB.statement.executeQuery("SELECT * FROM sales_table");
+                rs2 = ConnectDB.statementforSales.executeQuery("SELECT * FROM sales_table");
                 sales_record = new MusicData(rs2);
 
             } else {

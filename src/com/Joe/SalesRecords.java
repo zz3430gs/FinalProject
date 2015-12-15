@@ -3,7 +3,7 @@ package com.Joe;
 import javax.swing.*;
 import java.awt.*;
 
-public class SalesRecords extends JPanel{
+public class SalesRecords extends JFrame{
     private JPanel rootPanel;
     private JTable salesTable;
 
