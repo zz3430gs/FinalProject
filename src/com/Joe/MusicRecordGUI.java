@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class MusicRecordGUI extends JFrame{
+public class MusicRecordGUI extends JFrame {
     private JPanel rootPanel;
     //private JTabbedPane tabbedPane;
     private JTextField recordArtist;
@@ -24,7 +24,7 @@ public class MusicRecordGUI extends JFrame{
     private JButton sellRecordButton;
 
 
-    MusicRecordGUI(final MusicData musicRecord){//, final MusicData cosigner_info_display, final MusicData sales_records) {
+    MusicRecordGUI(final MusicData musicRecord) {//, final MusicData cosigner_info_display, final MusicData sales_records) {
 
         //tabbedPane = new JTabbedPane();
 
@@ -59,11 +59,11 @@ public class MusicRecordGUI extends JFrame{
         musicRecordTable.setGridColor(Color.BLACK);
         musicRecordTable.setModel(musicRecord);
 
-       // setContentPane(rootPanel);
-        //pack();
-        //setSize(600, 600);
-        //setVisible(true);
-        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setContentPane(rootPanel);
+        pack();
+        setSize(600, 600);
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         addNewRecordButton.addActionListener(new ActionListener() {
@@ -92,11 +92,12 @@ public class MusicRecordGUI extends JFrame{
                     sellPrice = Integer.parseInt(sellingPrice.getText());
                     if (sellPrice <= -0) {
                         throw new NumberFormatException("Please enter a positive number");
-                    }
+                    }//TODO What if it was a string
                 } catch (NumberFormatException ne) {
                     JOptionPane.showMessageDialog(rootPanel, "The price number can't be negative");
                     return;
                 }
+                //Print out what has been added
                 System.out.println("Adding " + name + " " + title + " " + " " + sellPrice + " " + consignername);
                 boolean insertRecordRow = musicRecord.insert_Record_To_Table(name, title, sellPrice, consignername);
 
@@ -130,45 +131,33 @@ public class MusicRecordGUI extends JFrame{
                 System.exit(0);
             }
         });
-       /* searchButton.addActionListener(new ActionListener() {
-            String searchBy="";
+        //got help and code from Malcolm
+        sellRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                searchBy = searchField.getText();
-               // if (searchBycomboBox.getSelectedItem().equals(opt0)) {
-                   // musicDatamodel.search(CreateTables.C_NAME,searchBy,1);
+                int n = JOptionPane.showConfirmDialog(null, "Are you certain you want to sell that record?", "WARNING!", JOptionPane.YES_NO_OPTION);
+                if (n == 0) {
+                    int rowIndex;
+                    int colIndex;
+                    rowIndex = musicRecordTable.getSelectedRow();
+                    System.out.println("The row I grabbed :" + rowIndex);
+                    colIndex = musicRecord.getColumnCount();
+                    System.out.println("The column I just grabbed :" + colIndex);
+                    //this grabs the ID number of the record so that I can execute the Data Models 'Sell Record' method.
+                    String i = (String) musicRecord.getValueAt(rowIndex, 0);
+                    if (musicRecord.sellRecord(i)) {
+                        musicRecord.fireTableDataChanged();
+                        JOptionPane.showMessageDialog(rootPanel, "Record has been sold and moved to sales tab.");
+                    }
+                } else if (n == 1) {
+                    JOptionPane.showMessageDialog(rootPanel, "  Sales Transaction Aborted.  ");
                 }
             }
-        });*/
+        });
     }
-
 
     public void windowClosing(WindowEvent e) {
         System.out.println("closing");
         ConnectDB.shutdown();
     }
-
-/*    @Override
-    public void windowClosed(WindowEvent e) {
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-    }*/
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Consigner_Info extends JPanel {
+public class Consigner_Info extends JFrame {
     private JPanel rootPanel;
     private JTable consignerTable;
     private JButton addConsignerButton;
@@ -19,6 +19,13 @@ public class Consigner_Info extends JPanel {
 
         consignerTable.setGridColor(Color.black);
         consignerTable.setModel(consigner_info_Display);
+
+        setContentPane(rootPanel);
+        pack();
+        setSize(600, 600);
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 
 
         addConsignerButton.addActionListener(new ActionListener() {

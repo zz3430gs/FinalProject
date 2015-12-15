@@ -9,12 +9,12 @@ import java.sql.SQLException;
 
 public class MainGui extends JFrame implements WindowListener {
     private JPanel rootPanel;
-    private JTabbedPane jTabbedPane;
+    private JTabbedPane TabbedPane;
 
     public MainGui(final MusicData musicRecord, final MusicData cosigner_info_display, final MusicData sales_records) {
         setContentPane(rootPanel);
 
-        jTabbedPane=new JTabbedPane();
+        TabbedPane=new JTabbedPane();
         ChangeListener changeListener = new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
@@ -35,17 +35,18 @@ public class MainGui extends JFrame implements WindowListener {
                 //sales_records.search("Default","",index+1);
                 System.out.println("This is the sales tab!");
             }
+
         }
     };
-        jTabbedPane.addChangeListener(changeListener);
-        rootPanel.add(jTabbedPane);
-        jTabbedPane.add("Music Records", new MusicRecordGUI(musicRecord));
-        jTabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
-        jTabbedPane.add("Sales Record",new SalesRecords(sales_records));
-        pack();
-        setSize(600, 600);
+        TabbedPane.addChangeListener(changeListener);
+        rootPanel.add(TabbedPane);
+        TabbedPane.add("Music Records", new MusicRecordGUI(musicRecord));
+        TabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
+        TabbedPane.add("Sales Record",new SalesRecords(sales_records));
+        //setSize(600, 600);
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        pack();
+        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 }
     public void windowClosing(WindowEvent e) {

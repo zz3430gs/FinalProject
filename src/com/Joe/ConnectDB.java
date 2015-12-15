@@ -45,7 +45,11 @@ public class ConnectDB {
             createConsignerModel();
             CreateSaleModel();
 
-            MainGui mainGui = new MainGui(musicRecord, Consigner_info_Display, sales_record);
+            Consigner_Info consigner_info = new Consigner_Info(Consigner_info_Display);
+            MusicRecordGUI musicRecordGUI = new MusicRecordGUI(musicRecord);
+            SalesRecords salesRecords = new SalesRecords(sales_record);
+
+           // MainGui mainGui = new MainGui(musicRecord, Consigner_info_Display, sales_record);
         } catch (SQLException se) {
             System.out.println(se);
             System.out.println("From ConnectDB");

@@ -9,6 +9,13 @@ public class SalesRecords extends JFrame{
 
     public SalesRecords(final MusicData salesRecords){
 
+        setContentPane(rootPanel);
+        pack();
+        setSize(600, 600);
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
         salesTable.setModel(salesRecords);
         salesTable.setGridColor(Color.black);
         salesRecords.fireTableDataChanged();

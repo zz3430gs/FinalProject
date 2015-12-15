@@ -19,18 +19,18 @@ public class CreateTables {
 
     public final static String SALE_TABLE_NAME = "sales_table";
     public final static String PK_SALE = "sales_id";
-    public final static String C_NAME = "consigner_name";
+    public final static String C_NAME = "consigners_name";
     public final static String SALES_PRICE = "sales_price";
     public final static String SALESPR = "our60percent";
     public final static String C_SALESPR = "c_40percent";
-    public final static String RECORD_TITLE = "record_title";
-    public final static String RECORD_ARTISTs = "record_artist";
+    public final static String RECORD_TITLE = "record_Title";
+    public final static String RECORD_ARTIST = "record_Artist";
 
     public final static String MUSICRECORD_TABLE_NAME = "music_records";
     public final static String PK_COLUMN = "record_id";
-    public final static String CONSIGNER_NAMEs = "consigner_name";
-    public final static String TITLE_COLUMN = "record_title";
-    public final static String RECORD_ARTIST = "record_artist";
+    public final static String CONSIGNER_NAMEs = "consigner_names";
+    public final static String TITLE_COLUMN = "records_title";
+    public final static String RECORDs_ARTIST = "records_artist";
     public final static String SELLING_PRICE = "selling_price";
 
 
@@ -50,22 +50,19 @@ public class CreateTables {
                 String createcosignerTableSQL = "CREATE TABLE " + CONSIGNER_TABLE_NAME + " (" + PK_Consigner + " int NOT NULL AUTO_INCREMENT," + CONSIGNER_NAME + " varchar(50), " + CONSIGNER_EMAIL + " varchar(50), " + CONSIGNER_ADDRESS + " varchar(50),  PRIMARY KEY(" + PK_Consigner + "))";
                 //System.out.println(createcosignerTableSQL);
                 ConnectDB.statement.executeUpdate(createcosignerTableSQL);
-                //insert_into_consigner_info();
                 System.out.println("Created consigners_info table");
                 insert_into_consigner_info();
             }
             if (!SalesTableExists()){
-            String createsalesTableSQL = "CREATE TABLE IF NOT EXISTS sales_table (sales_id INT NOT NULL AUTO_INCREMENT, consigner_name varchar(50),sales_price DOUBLE, our60percent DOUBLE,c_40percent DOUBLE,record_artist varchar(50),record_title varchar(50), PRIMARY KEY (sales_id))";
+                String createsalesTableSQL = "CREATE TABLE IF NOT EXISTS sales_table (sales_id INT NOT NULL AUTO_INCREMENT, consigner_name varchar(50),sales_price DOUBLE, our60percent DOUBLE,c_40percent DOUBLE,record_artist varchar(50),record_title varchar(50), PRIMARY KEY (sales_id))";
                 //System.out.println(createsalesTableSQL);
                 ConnectDB.statement.executeUpdate(createsalesTableSQL);
-                //insert_record_data_into_sales();
                 System.out.println("Created sales table");
                 insert_record_data_into_sales();
             }
+            //Create table if it doesn't exists
             if (!RecordTableExists()){
-                String createTableSQL = "CREATE TABLE IF NOT EXISTS music_records (record_id INT NOT NULL AUTO_INCREMENT,consigner_name varchar(50), record_title varchar(50), record_artist varchar(50), selling_price int, PRIMARY KEY(record_id))";
-                //System.out.println(createTableSQL);
-                //insert_into_record_table();
+                String createTableSQL = "CREATE TABLE "+ MUSICRECORD_TABLE_NAME+ " ("+ PK_COLUMN + " INT NOT NULL AUTO_INCREMENT,"+ CONSIGNER_NAMEs + "varchar(50), " + TITLE_COLUMN + " varchar(50),"+ RECORDs_ARTIST + " varchar(50),"+ SELLING_PRICE +" double ,PRIMARY KEY("+ PK_COLUMN+"))";
                 ConnectDB.statement.executeUpdate(createTableSQL);
                 System.out.println("Created music_records table");
                 insert_into_record_table();
@@ -78,6 +75,7 @@ public class CreateTables {
     public boolean insert_into_consigner_info(){
         try {
 
+            //Test data for consigners
             ConnectDB.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Mark','mark@yahoo.com','4029 Broad Ave N');");
             ConnectDB.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('Jimmy','jboi@gmail.com','3029 Hudson Ave N');");
             ConnectDB.statement.executeUpdate("insert into consigner_info(consigner_name, consigner_email, consigner_address) VALUES ('James','james@gmail.com','252 Knock Ave N');");
@@ -99,7 +97,7 @@ public class CreateTables {
     public boolean insert_record_data_into_sales(){
         //Test data for table not belong to consigner
         try {
-            ConnectDB.statement.executeUpdate("insert into sales_table(consigner_name, sales_price, our60percent, c_40percent, record_artist, record_title) VALUES ('Terry',30,18,12,'Mariah Carey','Without You')");
+            ConnectDB.statement.executeUpdate("insert into sales_table(consigners_name, sales_price, our60percent, c_40percent, record_Artist, record_Title) VALUES ('Terry',30,18,12,'Mariah Carey','Without You')");
             return true;
 
         }
@@ -111,17 +109,18 @@ public class CreateTables {
         return true;
     }
     public boolean insert_into_record_table(){
+        //Can't get the test data to show on the GUI and database
         try{
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('James','Back in Black','AC/DC',20)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Mark','Back in Black','AC/DC',20.50)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jimmy','Back in Black','AC/DC',20.50)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Alex','Born to Run','Bruce Springsteen',27.99)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Michelle','Tunnel of Love','Bruce Springsteen',21.99)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jason','The Man Who Sold the World','David Bowe',15)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Charlie','Saturday Night Fever','Various Artists', 10.99)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Anna','Too Dark Park','Skinny Puppy',15)");
-            ConnectDB.statement.executeUpdate("insert into music_records(consigner_name, record_title, record_artist, selling_price) VALUES ('Jamie','Slippery When Wet','Bon Jovi',19.99)");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('James','Back in Black','AC/DC',20);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Mark','Back in Black','AC/DC',20.50);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Jimmy','Back in Black','AC/DC',20.50);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Alex','Born to Run','Bruce Springsteen',27.99);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Lious','Goodbye Yellow Brick Road','Elton John',30);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Michelle','Tunnel of Love','Bruce Springsteen',21.99);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Jason','The Man Who Sold the World','David Bowe',15);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Charlie','Saturday Night Fever','Various Artists', 10.99);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Anna','Too Dark Park','Skinny Puppy',15);");
+            ConnectDB.statement.executeUpdate("insert into music_records(consigner_names, records_title, records_artist, selling_price) VALUES ('Jamie','Slippery When Wet','Bon Jovi',19.99);");
 
             return true;
         }

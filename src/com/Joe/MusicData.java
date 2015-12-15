@@ -151,6 +151,23 @@ public class MusicData extends AbstractTableModel {
             return false;
         }
     }*/
+//Taken from malcolms project
+    public boolean sellRecord(String record_ID){
+        PreparedStatement ps = null;
+        int r_id=Integer.parseInt(record_ID);
+        String sell_Record_SQL="UPDATE music_records WHERE record_id = ? ;";
+        try{
+            ps=ConnectDB.conn.prepareStatement(sell_Record_SQL);
+            ps.setInt(1,r_id);
+            ps.executeUpdate();
+            this.fireTableDataChanged();
+            return true;
+        }catch(SQLException se){
+            System.out.println("An error occurred when selling the record.");
+            System.out.println(se);
+            return false;
+        }
+    }
     public boolean insert_Record_To_Table(String artistName,String recordTitle,double price, String consignerName){
         PreparedStatement ps = null;
         try{
