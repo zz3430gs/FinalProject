@@ -16,7 +16,6 @@ public class MusicData extends AbstractTableModel {
         this.resultSet = rs;
         setup();
     }
-
     private void setup(){
         countRows();
     }
@@ -160,7 +159,7 @@ public class MusicData extends AbstractTableModel {
 
             String preparedInsertString="INSERT INTO music_records (record_artist,record_title,selling_price,consigner_name) VALUES(?,?,?,?)";
             resultSet.moveToInsertRow();
-            ps=Main.conn.prepareStatement(preparedInsertString);
+            ps=ConnectDB.conn.prepareStatement(preparedInsertString);
             ps.setString(1,artistName);
             ps.setString(2,recordTitle);
             ps.setDouble(3,price);
@@ -200,7 +199,7 @@ public class MusicData extends AbstractTableModel {
         try{
             String prep_Insert_String="INSERT INTO consigner_info (Consigner_Name,Address,E_Mail,)VALUES(?,?,?)";
             resultSet.moveToInsertRow() ;
-            ps=Main.conn.prepareStatement(prep_Insert_String);
+            ps=ConnectDB.conn.prepareStatement(prep_Insert_String);
             ps.setString(1,consigner_Name);
             ps.setString(2,address);
             ps.setString(3,E_Mail);
@@ -223,7 +222,7 @@ public class MusicData extends AbstractTableModel {
         try {
             String prep_insert_string = "INSERT INTO sales_table(consignerName, price, my60percemt, c_40percent, recordArtist, recordTitle) VALUES (?,?,?,?,?,?)";
             resultSet.moveToInsertRow();
-            pS=Main.conn.prepareStatement(prep_insert_string);
+            pS=ConnectDB.conn.prepareStatement(prep_insert_string);
             pS.setString(1, consignerName);
             pS.setDouble(2,price);
             pS.setDouble(3, saleX60);

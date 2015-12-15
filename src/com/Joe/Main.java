@@ -3,7 +3,9 @@ package com.Joe;
 import java.sql.*;
 
 public class Main {
-    private static String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/";
+    public static void main(String[] args) {
+        ConnectDB connectDB = new ConnectDB();
+   /* private static String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "music_shop";
     private static final String USER = "root";
     private static final String PASS = "itecitec";
@@ -22,9 +24,9 @@ public class Main {
     private static MusicData musicDataModel;
     private static MusicData consigner_info_Display=null;
     private static MusicData musicRecord=null;
-    private static MusicData sales_record=null;
+    private static MusicData sales_record=null;*/
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
         if (!setup()) {
             System.exit(-1);
@@ -38,10 +40,10 @@ public class Main {
         MainGui tableGUI = new MainGui(musicRecord,consigner_info_Display,sales_record);
 
 
-    }
+    }*/
 
-    //Create or recreate a ResultSet containing the whole database, and give it to musicDataModel
-    public static boolean loadAllMusics() {
+        //Create or recreate a ResultSet containing the whole database, and give it to musicDataModel
+    /*public static boolean loadAllMusics() {
 
         try {
 
@@ -117,7 +119,7 @@ public class Main {
                 addDataSQl = "INSERT INTO" + MUSICRECORD_TABLE_NAME + "(" + TITLE_COLUMN + ", " + RECORD_ARTIST + ", " + SELLING_PRICE + ")" + " VALUES('Jamie','Slippery When Wet','Bon Jovi',19.99)";
                 statement.executeUpdate(addDataSQl);*/
 
-            }
+            /*}
             return true;
 
             //return true;
@@ -201,5 +203,6 @@ public class Main {
         catch (SQLException se) {
             se.printStackTrace();
         }
+    }*/
     }
 }

@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
 
 public class MainGui extends JFrame implements WindowListener {
     private JPanel rootPanel;
@@ -38,7 +39,7 @@ public class MainGui extends JFrame implements WindowListener {
     };
         jTabbedPane.addChangeListener(changeListener);
         rootPanel.add(jTabbedPane);
-        jTabbedPane.add("Music Record", new MusicRecordGUI(musicRecord));
+        jTabbedPane.add("Music Records", new MusicRecordGUI(musicRecord));
         jTabbedPane.add("Consigner Information",new Consigner_Info(cosigner_info_display));
         jTabbedPane.add("Sales Record",new SalesRecords(sales_records));
         pack();
@@ -48,8 +49,14 @@ public class MainGui extends JFrame implements WindowListener {
 
 }
     public void windowClosing(WindowEvent e) {
-        System.out.println("closing");
-        Main.shutdown();
+        try{
+            System.out.println("closing");
+            ConnectDB.shutdownResources();
+    }catch (SQLException se){
+            System.out.println(se);
+            System.out.println("Error closing");
+        }
+
     }
 
    @Override

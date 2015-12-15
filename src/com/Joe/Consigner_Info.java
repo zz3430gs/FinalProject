@@ -49,7 +49,7 @@ public class Consigner_Info extends JPanel {
                 }
                 boolean deleted = consigner_info_Display.deleteRow(currentRow);
                 if (deleted) {
-                    Main.loadAllMusics();
+                    ConnectDB.loadAllConsignerInfo();
                 } else {
                     JOptionPane.showMessageDialog(rootPanel, "Error deleting consigner");
                 }
@@ -59,7 +59,7 @@ public class Consigner_Info extends JPanel {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.shutdown();
+                ConnectDB.shutdown();
                 System.exit(0);
             }
         });

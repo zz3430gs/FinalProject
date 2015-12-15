@@ -74,17 +74,17 @@ public class MusicRecordGUI extends JFrame{
                 String title = recordTitle.getText();
 
                 if (title == null || title.trim().equals("")) {
-                    JOptionPane.showMessageDialog(rootPane, "Please enter a title");
+                    JOptionPane.showMessageDialog(rootPanel, "Please enter a title");
                     return;
                 }
                 String consignername = consignerName.getText();
                 if (consignername == null || consignername.trim().equals("")) {
-                    JOptionPane.showMessageDialog(rootPane, "Please enter a consigner name");
+                    JOptionPane.showMessageDialog(rootPanel, "Please enter a consigner name");
                     return;
                 }
                 String name = recordArtist.getText();
                 if (name == null || name.trim().equals("")) {
-                    JOptionPane.showMessageDialog(rootPane, "Please enter a artist name");
+                    JOptionPane.showMessageDialog(rootPanel, "Please enter a artist name");
                     return;
                 }
                 int sellPrice;
@@ -94,15 +94,14 @@ public class MusicRecordGUI extends JFrame{
                         throw new NumberFormatException("Please enter a positive number");
                     }
                 } catch (NumberFormatException ne) {
-                    JOptionPane.showMessageDialog(rootPane,
-                            "The price number can't be negative");
+                    JOptionPane.showMessageDialog(rootPanel, "The price number can't be negative");
                     return;
                 }
                 System.out.println("Adding " + name + " " + title + " " + " " + sellPrice + " " + consignername);
                 boolean insertRecordRow = musicRecord.insert_Record_To_Table(name, title, sellPrice, consignername);
 
                 if (!insertRecordRow) {
-                    JOptionPane.showMessageDialog(rootPane, "Error adding new Music Record");
+                    JOptionPane.showMessageDialog(rootPanel, "Error adding new Music Record");
                 }
                 musicRecord.fireTableDataChanged();
             }
@@ -114,20 +113,20 @@ public class MusicRecordGUI extends JFrame{
                 int currentRow = musicRecordTable.getSelectedRow();
 
                 if (currentRow == -1) {      // -1 means no row is selected. Display error message.
-                    JOptionPane.showMessageDialog(rootPane, "Please choose a record to delete");
+                    JOptionPane.showMessageDialog(rootPanel, "Please choose a record to delete");
                 }
                 boolean deleted = musicRecord.deleteRow(currentRow);
                 if (deleted) {
-                    Main.loadAllMusics();
+                    ConnectDB.loadAllRecordData();
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, "Error deleting music record");
+                    JOptionPane.showMessageDialog(rootPanel, "Error deleting music record");
                 }
             }
         });
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.shutdown();
+                ConnectDB.shutdown();
                 System.exit(0);
             }
         });
@@ -146,7 +145,7 @@ public class MusicRecordGUI extends JFrame{
 
     public void windowClosing(WindowEvent e) {
         System.out.println("closing");
-        Main.shutdown();
+        ConnectDB.shutdown();
     }
 
 /*    @Override
