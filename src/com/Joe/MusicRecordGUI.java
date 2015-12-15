@@ -20,7 +20,6 @@ public class MusicRecordGUI extends JFrame {
     private JButton quitButton;
     private JTextField consignerName;
     private JTable musicRecordTable;
-    //private JComboBox searchBycomboBox;
     private JButton sellRecordButton;
 
 

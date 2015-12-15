@@ -131,23 +131,6 @@ public class CreateTables {
         return false;
     }
 
-    /*public static boolean loadAllConsignerInfo(){
-        try {
-
-            if (rs != null) {
-                rs.close();
-            }
-
-            String getAllData = "SELECT * FROM " + CONSIGNER_TABLE_NAME;
-            rs = Main.statement.executeQuery(getAllData);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error loading Consigner data");
-            System.out.println(e);
-            e.printStackTrace();
-            return false;
-        }
-    }*/
     public static boolean loadAllSalesInfo(){
         try {
             if (rs != null){
@@ -163,8 +146,7 @@ public class CreateTables {
             return false;
         }
     }
-
-
+    //Check if the table exist if not then it will create one in another method
     public boolean ConsignerTableExists() throws SQLException{
         String CheckTableExists = "SHOW TABLES LIKE '"+ CONSIGNER_TABLE_NAME + "'";
         ResultSet consignerRs = ConnectDB.statement.executeQuery(CheckTableExists);

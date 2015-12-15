@@ -17,54 +17,10 @@ public class MusicData extends AbstractTableModel {
         setup();
     }
     private void setup(){
-        countRows();
-    }
-    /*private void setup() {
 
         countRows();
-
-        try {
-            colCount = resultSet.getMetaData().getColumnCount();
-
-        } catch (SQLException se) {
-            System.out.println("Error counting columns" + se);
-        }
-
-    }*/
-
-    /*private void countRows() {
-        rowCount = 0;
-        try {
-            //Move cursor to the start...
-            resultSet.beforeFirst();
-            // next() method moves the cursor forward one row and returns true if there is another row ahead
-            while (resultSet.next()) {
-                rowCount++;
-
-            }
-            resultSet.beforeFirst();
-
-        } catch (SQLException se) {
-            System.out.println("Error counting rows " + se);
-        }
-
     }
 
-    @Override
-    public int getRowCount() {
-        countRows();
-        return rowCount;
-    }
-    @Override
-    public int getColumnCount() {
-        try {
-            colCount = resultSet.getMetaData().getColumnCount();
-        } catch (SQLException se) {
-            System.out.println(se);
-            System.out.println("Error created by get column count");
-        }
-        return colCount;
-    }*/
     private void countRows(){
         rowCount=0;
         try{
@@ -132,26 +88,7 @@ public class MusicData extends AbstractTableModel {
         setup();
     }
 
-    /*public boolean insertRecordRow(String consignerName, String title, String artist, int sellingPrice) {
-
-        try {
-            //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
-            resultSet.moveToInsertRow();
-            resultSet.updateString(Main.CONSIGNER_NAME, consignerName);
-            resultSet.updateString(Main.TITLE_COLUMN, title);
-            resultSet.updateString(Main.RECORD_ARTIST, artist);
-            resultSet.updateInt(Main.SELLING_PRICE, sellingPrice);
-            resultSet.insertRow();
-            resultSet.moveToCurrentRow();
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Error adding row");
-            System.out.println(e);
-            return false;
-        }
-    }*/
-//Taken from malcolms project
+//Help from malcolms project
     public boolean sellRecord(String record_ID){
         PreparedStatement ps = null;
         int r_id=Integer.parseInt(record_ID);
@@ -171,9 +108,6 @@ public class MusicData extends AbstractTableModel {
     public boolean insert_Record_To_Table(String artistName,String recordTitle,double price, String consignerName){
         PreparedStatement ps = null;
         try{
-
-            //insert into record_catalog (Artist_Name,Album_Title,Price,Shelved_Date,Sold_Or_Not,consigners_C_ID) Values('Dosh','Tommy',20.75,'2015-03-15',false,5);
-
             String preparedInsertString="INSERT INTO music_records (record_artist,record_title,selling_price,consigner_name) VALUES(?,?,?,?)";
             resultSet.moveToInsertRow();
             ps=ConnectDB.conn.prepareStatement(preparedInsertString);
@@ -192,25 +126,6 @@ public class MusicData extends AbstractTableModel {
         }
     }
 
-    /*public boolean insertCosignerRow(String consignerName, String consignerEmail, String address) {
-
-        try {
-            //Move to insert row, insert the appropriate data in each column, insert the row, move cursor back to where it was before we started
-            resultSet.moveToInsertRow();
-            resultSet.updateString(CreateTables.CONSIGNER_NAME, consignerName);
-            resultSet.updateString(CreateTables.CONSIGNER_EMAIL, consignerEmail);
-            resultSet.updateString(CreateTables.CONSIGNER_ADDRESS, address);
-            resultSet.insertRow();
-            resultSet.moveToCurrentRow();
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Error adding row");
-            System.out.println(e);
-            return false;
-        }
-
-    }*/
     public boolean insert_Consigner_To_List(String consigner_Name,String address,String E_Mail){
         PreparedStatement ps = null;
         try{
@@ -223,11 +138,11 @@ public class MusicData extends AbstractTableModel {
             ps.executeUpdate();
             this.fireTableDataChanged();
             ps.close();
-            JOptionPane.showMessageDialog(null,"You successfully added "+consigner_Name+", Address: "+address+", E-mail: "+E_Mail+"");
+            JOptionPane.showMessageDialog(null,"Added "+consigner_Name+", Address: "+address+", E-mail: "+E_Mail+"");
             System.out.println(String.format("You added"));
             return true;
         }catch(SQLException se){
-            System.out.println("Insertion of Consigner Information Failed");
+            System.out.println("Error inserting Consigner information");
             System.out.println(se);
             return false;
         }
@@ -241,7 +156,7 @@ public class MusicData extends AbstractTableModel {
             resultSet.moveToInsertRow();
             pS=ConnectDB.conn.prepareStatement(prep_insert_string);
             pS.setString(1, consignerName);
-            pS.setDouble(2,price);
+            pS.setDouble(2, price);
             pS.setDouble(3, saleX60);
             pS.setDouble(4, saleX40);
             pS.setString(5, recordArtist);

@@ -1,5 +1,5 @@
 package com.Joe;
-
+//This is used because couldn't figure out how to use tabbedpane
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

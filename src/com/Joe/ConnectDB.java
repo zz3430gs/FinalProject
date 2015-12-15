@@ -45,6 +45,7 @@ public class ConnectDB {
             createConsignerModel();
             CreateSaleModel();
 
+            //Couldn't get tabbedpane to work so did it separately
             Consigner_Info consigner_info = new Consigner_Info(Consigner_info_Display);
             MusicRecordGUI musicRecordGUI = new MusicRecordGUI(musicRecord);
             SalesRecords salesRecords = new SalesRecords(sales_record);
@@ -57,6 +58,7 @@ public class ConnectDB {
         }
     }
 
+    //Close the statements, resultset, and connection
     public static void shutdownResources() throws SQLException {
         statement.close();
         statementforRecords.close();
@@ -69,6 +71,7 @@ public class ConnectDB {
 
     }
 
+    //Load all data from consigner
     public static boolean loadAllConsignerInfo() {
         try {
 
@@ -175,6 +178,7 @@ public class ConnectDB {
         }
     }
 
+    //Shutdown the Resultset and statements, and connection
     public static void shutdown(){
         try {
             if (rs != null) {

@@ -28,6 +28,7 @@ public class Consigner_Info extends JFrame {
 
 
 
+        //If the adding doesn't go between parameter than error message will show
         addConsignerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +47,7 @@ public class Consigner_Info extends JFrame {
 
             }
         });
+        //Select a row to delete
         deleteConsignerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,6 +65,7 @@ public class Consigner_Info extends JFrame {
 
             }
         });
+        //Quit
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
